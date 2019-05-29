@@ -10,6 +10,7 @@ import com.lzp.demo.utils.ErrorCode;
 import com.lzp.demo.utils.MD5Utils;
 import com.lzp.demo.utils.RedisUtil;
 import com.lzp.demo.utils.ResultMap;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,7 +32,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResultMap queryAdminInfo(String telephone, String passWord) {
 
-
         Admin admin;
         passWord = MD5Utils.string2MD5(passWord);
         String tokenKey = (String) RedisUtil.get("admin_" + telephone);
@@ -49,7 +49,9 @@ public class AdminServiceImpl implements AdminService {
             admin.setToken(UUID.randomUUID().toString());
             RedisUtil.set("admin_"+admin.getTelephone(),admin.getToken(),RedisUtil.A_WEEK);
             RedisUtil.set("admin_"+admin.getToken(), JSON.toJSONString(admin),RedisUtil.TWO_DAYS);
-            return ResultMap.ok().put("result",admin);
+            AdminModel adminModel = new AdminModel();
+            BeanUtils.copyProperties(admin,adminModel);
+            return ResultMap.ok().put("result",adminModel);
         }
         return ResultMap.error(ErrorCode.LOGIN_ERROR,"账号或密码错误");
     }

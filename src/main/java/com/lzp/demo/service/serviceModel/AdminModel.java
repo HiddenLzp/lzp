@@ -10,6 +10,10 @@ public class AdminModel implements Serializable {
   private String telephone;
   private String email;
   private String sex;
+  private String token;
+  private String status;
+  private String role;
+
 
 
   public long getId() {
@@ -56,5 +60,27 @@ public class AdminModel implements Serializable {
     this.sex = sex;
   }
 
+  public String getToken() {
+    return token;
+  }
 
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
 }
