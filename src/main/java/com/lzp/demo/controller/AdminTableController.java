@@ -14,4 +14,9 @@ public class AdminTableController {
     public String index(){
         return "index";
     }
+
+    @RequestMapping("/")
+    public String login(){
+        return "login";
+    }
 }
