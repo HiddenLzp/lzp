@@ -399,46 +399,67 @@
 	//	注册 弹框 start
 		$( "#regist" ).on('click', function(e) {
 
-			var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
-				// width: "400",
-				// height: "300",
-				modal: true,
-				title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> 发送邮件</h4></div>",
-				title_html: true,
-				buttons: [
-					{
-						text: "Cancel",
-						"class" : "btn btn-minier",
-						click: function() {
-							$( this ).dialog( "close" );
-						}
-					},
-					{
-						text: "OK",
-						"class" : "btn btn-primary btn-minier",
-						click: function() {
-							var msgCode = $("#msgCode").val();
-							var telephone = $("#registTel").val();
-							$.ajax({
-								url: "",
-								type: "post",
-								data:{
-									telephone: telephone,
-									msgCode: msgCode
-								},
-								success: function (data) {
-									if (data.status == 200){
-										alert("注册成功，您可以返回登录了！")
-										$( this ).dialog( "close" );
-									} else {
-										alert("注册失败，原因是："+ data.message);
-									}
-								}
-							})
-						}
-					}
-				]
-			});
+		    var pwd1 = $("#registPwd").val();
+		    var pwd2 = $("#registPwdTwo").val();
+		    if(pwd1==pwd2){
+                $.ajax({
+                    url: "/admin/registerAdmin",
+                    type: "post",
+                    data:{
+                        telephone: $("#registTel").val(),
+                        email: $("#registEmail").val(),
+                        password: $("#registPwd").val()
+                    },
+                    success: function (data) {
+                        if(data.status == 200){
+                            var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+                                // width: "400",
+                                // height: "300",
+                                modal: true,
+                                title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> 发送邮件</h4></div>",
+                                title_html: true,
+                                buttons: [
+                                    {
+                                        text: "Cancel",
+                                        "class" : "btn btn-minier",
+                                        click: function() {
+                                            $( this ).dialog( "close" );
+                                        }
+                                    },
+                                    {
+                                        text: "OK",
+                                        "class" : "btn btn-primary btn-minier",
+                                        click: function() {
+                                            var msgCode = $("#msgCode").val();
+                                            var telephone = $("#registTel").val();
+                                            $.ajax({
+                                                url: "/admin/checkmsgCode",
+                                                type: "post",
+                                                data:{
+                                                    telephone: telephone,
+                                                    msgCode: msgCode
+                                                },
+                                                success: function (data) {
+                                                    if (data.status == 200){
+                                                        alert("注册成功，您可以返回登录了！")
+                                                        $( this ).dialog( "close" );
+                                                    } else {
+                                                        alert("注册失败，原因是："+ data.message);
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    }
+                                ]
+                            });
+                        }else{
+                            alert(data.message);
+                        }
+                    }
+                })
+			}else {
+		        alert("两次输入的密码不一样，请重新输入！")
+			}
 
 			/**
 			 dialog.data( "uiDialog" )._title = function(title) {

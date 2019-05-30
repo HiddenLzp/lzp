@@ -12,4 +12,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AdminMapper {
     Admin queryAdminInfo(@Param("telephone")String telephone, @Param("passWord")String passWord);
+
+    Integer insertAdmin(@Param("telephone")String telephone, @Param("email")String email, @Param("passWord")String password,@Param("random")String random);
+
+    Admin queryAdminByTelephone(String telephone);
+
+    Integer modifyStatus(String telephone);
 }

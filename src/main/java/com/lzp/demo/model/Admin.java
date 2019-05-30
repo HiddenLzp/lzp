@@ -14,7 +14,15 @@ public class Admin implements Serializable {
   private String token;
   private String status;
   private String role;
+  private String randome;
 
+  public String getRandome() {
+    return randome;
+  }
+
+  public void setRandome(String randome) {
+    this.randome = randome;
+  }
 
   public long getId() {
     return id;
@@ -24,7 +32,6 @@ public class Admin implements Serializable {
     this.id = id;
   }
 
-
   public String getUserName() {
     return userName;
   }
@@ -32,7 +39,6 @@ public class Admin implements Serializable {
   public void setUserName(String userName) {
     this.userName = userName;
   }
-
 
   public String getTelephone() {
     return telephone;
@@ -42,7 +48,6 @@ public class Admin implements Serializable {
     this.telephone = telephone;
   }
 
-
   public String getEmail() {
     return email;
   }
@@ -51,7 +56,6 @@ public class Admin implements Serializable {
     this.email = email;
   }
 
-
   public String getSex() {
     return sex;
   }
@@ -59,7 +63,6 @@ public class Admin implements Serializable {
   public void setSex(String sex) {
     this.sex = sex;
   }
-
 
   public String getPassWord() {
     return passWord;

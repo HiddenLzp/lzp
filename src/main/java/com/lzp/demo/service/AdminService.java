@@ -8,4 +8,14 @@ public interface AdminService {
      *  查询用户信息，条件: 手机号，密码
      */
     ResultMap queryAdminInfo(String telephone, String passWord);
+
+    /**
+     * 用户注册
+     */
+    ResultMap registerAdmin(String telephone, String email, String password);
+
+    /**
+     * 验证验证码，修改用户的状态
+     */
+    ResultMap checkmsgCode(String telephone, String msgCode);
 }
