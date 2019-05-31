@@ -62,7 +62,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ResultMap registerAdmin(String telephone, String email, String password) {
+    public ResultMap registerAdmin(String telephone, String email) {
+        boolean exists = RedisUtil.exists("register_" + telephone);
+        if(exists){
+            return ResultMap.ok().put("result","验证码已经发送，若未收到，请在120秒后重试!");
+        }
         /**
          * 查看手机号是否已经被注册
          */
@@ -70,8 +74,6 @@ public class AdminServiceImpl implements AdminService {
         if(admin != null){
             return ResultMap.error(100003,"该手机已被注册!");
         }
-        //加密密码
-        password = MD5Utils.string2MD5(password);
 
         //六位随机数
         Random random = new Random();
@@ -79,24 +81,31 @@ public class AdminServiceImpl implements AdminService {
         for (int i=0;i<6;i++) {
             result += random.nextInt(10);
         }
-        Integer flag = adminMapper.insertAdmin(telephone,email,password,result);
-        mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
+            try {
+                mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
+                //验证码存入redis
+                RedisUtil.set("register_"+telephone,result, (long) (60 * 2));
+                return ResultMap.ok().put("result","邮件已发送!");
+            }catch (Exception e){
 
-        if(flag == 1){
-            return ResultMap.ok().put("result","邮件已发送!");
-        }else {
-            return ResultMap.error(100002,"注册失败，请稍后重试!");
-        }
+                return ResultMap.error(100002,"注册失败，请稍后重试!");
+            }
     }
 
     @Override
-    public ResultMap checkmsgCode(String telephone, String msgCode) {
-        Admin admin = adminMapper.queryAdminByTelephone(telephone);
-        if(msgCode.equals(admin.getRandom())){
+    public ResultMap checkmsgCode(String telephone, String msgCode, String email, String password) {
+        String result = (String) RedisUtil.get("register_" + telephone);
+        if(msgCode.equals(result)){
             try {
-
-                adminMapper.modifyStatus(telephone);
-                return ResultMap.ok();
+                //加密密码
+                password = MD5Utils.string2MD5(password);
+                Integer flag = adminMapper.insertAdmin(telephone,email,password,result);
+                if (flag == 1) {
+                    RedisUtil.remove("register_"+telephone);
+                    return ResultMap.ok().put("result","注册成功!请返回重新登录!");
+                }else {
+                    return ResultMap.error(100002,"注册失败，请稍后重试!");
+                }
             }catch (Exception e){
                 e.printStackTrace();
                 return ResultMap.error(100010,"系统未知错误!");

@@ -12,10 +12,10 @@ public interface AdminService {
     /**
      * 用户注册
      */
-    ResultMap registerAdmin(String telephone, String email, String password);
+    ResultMap registerAdmin(String telephone, String email);
 
     /**
      * 验证验证码，修改用户的状态
      */
-    ResultMap checkmsgCode(String telephone, String msgCode);
+    ResultMap checkmsgCode(String telephone, String msgCode, String email, String password);
 }

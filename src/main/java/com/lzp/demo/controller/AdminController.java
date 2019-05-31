@@ -27,19 +27,19 @@ public class AdminController {
     }
 
     @PostMapping("/registerAdmin")
-    public ResultMap registerAdmin(String telephone, String email,String password){
-        if(StringUtils.isEmpty(telephone) || StringUtils.isEmpty(email) || StringUtils.isEmpty(password)){
+    public ResultMap registerAdmin(String telephone, String email){
+        if(StringUtils.isEmpty(telephone) || StringUtils.isEmpty(email)){
             return ResultMap.error(100001,"请填写完整的信息");
         }
-        return adminService.registerAdmin(telephone,email,password);
+        return adminService.registerAdmin(telephone,email);
     }
 
     @PostMapping("/checkmsgCode")
-    public ResultMap checkmsgCode(String telephone, String msgCode){
+    public ResultMap checkmsgCode(String telephone, String msgCode, String email,String password){
         if(StringUtils.isEmpty(telephone) || StringUtils.isEmpty(msgCode)){
             return ResultMap.error(100007,"请输入验证码！");
         }
-        return adminService.checkmsgCode(telephone,msgCode);
+        return adminService.checkmsgCode(telephone,msgCode,email,password);
     }
 
 
