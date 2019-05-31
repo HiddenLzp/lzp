@@ -19,7 +19,7 @@ public class HttppostgetApplicationTests {
     @Test
     public void contextLoads() {
 
-        mailService.sendSimpleTextMailActual("测试发发送","1111",new String[]{"1223279108@qq.com"},null,null,null);
+       // mailService.sendSimpleTextMailActual("测试发发送","1111",new String[]{"1223279108@qq.com"},null,null,null);
     }
 
 }

@@ -68,7 +68,7 @@
 
 											<div class="space-6"></div>
 
-											<form>
+											<form id="login_from">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -92,7 +92,7 @@
 															<span class="lbl"> Remember Me</span>
 														</label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary" onclick="doLogin()">
+														<button type="button" id="loading-btn" data-loading-text="Loading..." class=" width-35 pull-right btn btn-sm btn-primary ">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">登录</span>
 														</button>
@@ -306,7 +306,6 @@
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='/static/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-		<script src="/static/js/bootstrap.min.js"></script>
 
 		<!-- page specific plugin scripts -->
 		<script src="/static/js/jquery-ui.min.js"></script>
@@ -316,6 +315,7 @@
 		<script src="/static/js/ace-elements.min.js"></script>
 		<script src="/static/js/ace.min.js"></script>
 		<!-- inline scripts related to this page -->
+
 		<script type="text/javascript">
 			jQuery(function($) {
 			 $(document).on('click', '.toolbar a[data-target]', function(e) {
@@ -353,7 +353,9 @@
 
 		</script>
 
-	<script type="text/javascript">
+
+        <script src="/static/js/bootstrap.min.js"></script>
+	<script type="text/javascript" >
 		$(function($){
 			$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
 				_title: function(title) {
@@ -373,9 +375,27 @@
 			}));
 		})
 		// <!--登录   start-->
-		function doLogin(){
-			init();
-		}
+
+        $(function () {
+                $('#loading-btn').on(ace.click_event, function () {
+                    var telepphone = $("#telepphone").val();
+                    if (!(/^1[34578]\d{9}$/.test(telepphone))){
+                        alert("手机号有误!")
+                        return false;
+                    }
+                    if ($("#loginPwd").val() == null || $("#loginPwd").val() == "" || $("#loginPwd").val() == undefined) {
+                        alert("请输入密码!")
+                        $("#loginPwd").focus();
+                        return false;
+                    }
+                    var btn = $(this);
+                    btn.button('loading')
+                    init();
+                    setTimeout(function () {
+                        btn.button('reset')
+                    }, 2000)
+                });
+        })
 
 		function init() {
 			$.ajax({
@@ -397,11 +417,35 @@
 		}
 		// <!--登录  end-->
 	//	注册 弹框 start
-		$( "#regist" ).on('click', function(e) {
+		$( "#regist" ).on(ace.click_event, function(e) {
 
+            var registEmail = $("#registEmail").val();
+            var telephone = $("#registTel").val();
+            var registPwd = $("#registPwd").val();
+            if (!(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(registEmail))){
+                alert("邮箱格式错误!");
+                $("#registEmail").focus();
+                return false;
+            }
+            if (!(/^1[34578]\d{9}$/.test(telephone))){
+                alert("手机号有误!");
+                $("#registTel").focus();
+                return false;
+            }
+
+            if (registPwd == null || registPwd == ""){
+                alert("请填写密码!");
+                $("#registPwd").focus();
+                return false;
+            }
 		    var pwd1 = $("#registPwd").val();
 		    var pwd2 = $("#registPwdTwo").val();
 		    if(pwd1==pwd2){
+                var btn = $(this);
+                btn.button('loading');
+                setTimeout(function () {
+                    btn.button('reset')
+                }, 10000);
                 $.ajax({
                     url: "/admin/registerAdmin",
                     type: "post",
@@ -431,15 +475,18 @@
                                         "class" : "btn btn-primary btn-minier",
                                         click: function() {
                                             var msgCode = $("#msgCode").val();
-                                            var telephone = $("#registTel").val();
+                                            if (msgCode == null ||msgCode == ""){
+                                                alert("请填写验证码!")
+                                                return false;
+                                            }
                                             $.ajax({
                                                 url: "/admin/checkmsgCode",
                                                 type: "post",
                                                 data:{
                                                     telephone: telephone,
                                                     msgCode: msgCode,
-													email: $("#registEmail").val(),
-													password: $("#registPwd").val()
+													email: registEmail,
+													password: registPwd
                                                 },
                                                 success: function (data) {
                                                     if (data.status == 200){
