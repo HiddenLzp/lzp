@@ -193,7 +193,7 @@
 											<div class="space-6"></div>
 											<p> 输入你的信息: </p>
 
-											<form>
+											<form id="registerForm">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -441,8 +441,9 @@
                                                 },
                                                 success: function (data) {
                                                     if (data.status == 200){
-                                                        alert("注册成功，您可以返回登录了！")
-                                                        $( this ).dialog( "close" );
+                                                        $( "#dialog-message" ).dialog( "close" );
+                                                        alert("注册成功，您可以返回登录了！");
+                                                        document.getElementById("registerForm").reset();
                                                     } else {
                                                         alert("注册失败，原因是："+ data.message);
                                                     }

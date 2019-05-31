@@ -14,14 +14,14 @@ public class Admin implements Serializable {
   private String token;
   private String status;
   private String role;
-  private String randome;
+  private String random;
 
-  public String getRandome() {
-    return randome;
+  public String getRandom() {
+    return random;
   }
 
-  public void setRandome(String randome) {
-    this.randome = randome;
+  public void setRandom(String random) {
+    this.random = random;
   }
 
   public long getId() {

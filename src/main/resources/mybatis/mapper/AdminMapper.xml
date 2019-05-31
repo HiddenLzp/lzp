@@ -19,4 +19,32 @@
             telephone = #{telephone}
             AND `passWord` = #{passWord}
     </select>
+    
+    <insert id="insertAdmin">
+        INSERT INTO admin ( STATUS, telephone, email, `passWord`,  random )
+        VALUE
+            (
+            2,
+            <if test="telephone != null">
+                #{telephone},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="passWord != null">
+                #{passWord},
+            </if>
+            <if test="random != null">
+                #{random}
+            </if>
+        )
+    </insert>
+    
+    <select id="queryAdminByTelephone" resultType="Admin">
+        SELECT * FROM admin where telephone = #{telephone}
+    </select>
+
+    <update id="modifyStatus">
+        UPDATE admin set status = 1 where telephone = #{telephone}
+    </update>
 </mapper>

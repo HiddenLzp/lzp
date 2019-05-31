@@ -79,8 +79,9 @@ public class AdminServiceImpl implements AdminService {
         for (int i=0;i<6;i++) {
             result += random.nextInt(10);
         }
-        mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
         Integer flag = adminMapper.insertAdmin(telephone,email,password,result);
+        mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
+
         if(flag == 1){
             return ResultMap.ok().put("result","邮件已发送!");
         }else {
@@ -91,11 +92,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResultMap checkmsgCode(String telephone, String msgCode) {
         Admin admin = adminMapper.queryAdminByTelephone(telephone);
-        if(msgCode.equals(admin.getRandome())){
-            Integer result = adminMapper.modifyStatus(telephone);
-            if(result > 1){
+        if(msgCode.equals(admin.getRandom())){
+            try {
+
+                adminMapper.modifyStatus(telephone);
                 return ResultMap.ok();
-            }else {
+            }catch (Exception e){
+                e.printStackTrace();
                 return ResultMap.error(100010,"系统未知错误!");
             }
 

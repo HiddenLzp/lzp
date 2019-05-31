@@ -17,5 +17,5 @@ public interface AdminMapper {
 
     Admin queryAdminByTelephone(String telephone);
 
-    Integer modifyStatus(String telephone);
+    void modifyStatus(String telephone);
 }

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lzp.demo</groupId>
-    <artifactId>httppostget</artifactId>
+    <artifactId>lzp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>httppostget</name>
+    <name>lzp</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
