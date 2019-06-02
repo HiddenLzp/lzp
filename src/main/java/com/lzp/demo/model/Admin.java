@@ -1,11 +1,20 @@
 package com.lzp.demo.model;
 
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity(name = "admin")
 public class Admin implements Serializable {
 
+  @Id
+  @Column(name = "id")
+  @GeneratedValue
   private long id;
+
   private String userName;
   private String telephone;
   private String email;

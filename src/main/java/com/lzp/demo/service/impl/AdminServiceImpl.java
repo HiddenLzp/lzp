@@ -72,7 +72,12 @@ public class AdminServiceImpl implements AdminService {
          */
         Admin admin =adminMapper.queryAdminByTelephone(telephone);
         if(admin != null){
-            return ResultMap.error(100003,"该手机已被注册!");
+            if(admin.getStatus() == "2"){
+                return ResultMap.ok().put("result","填写验证码!");
+            }else {
+                return ResultMap.error(100003,"该手机已被注册!");
+            }
+
         }
 
         //六位随机数
