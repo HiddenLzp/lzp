@@ -9,10 +9,9 @@ import java.util.Random;
  * @Date:2019/6/213 :51
  * @Description:
  */
-@Component
 public class RandomNum {
 
-    public String getRandomNum(){
+    public static String getRandomNum(){
         //六位随机数
         Random random = new Random();
         String result="";

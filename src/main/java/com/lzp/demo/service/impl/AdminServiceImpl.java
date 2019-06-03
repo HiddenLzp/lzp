@@ -33,9 +33,6 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private MailService mailServicel;
 
-    @Resource
-    private RandomNum randomNum;
-
     @Override
     public ResultMap queryAdminInfo(String telephone, String passWord) {
 
@@ -87,7 +84,7 @@ public class AdminServiceImpl implements AdminService {
             }
         }
         //六位随机数
-        String result= randomNum.getRandomNum();
+        String result= RandomNum.getRandomNum();
             try {
                 mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
                 //验证码存入redis
@@ -135,7 +132,7 @@ public class AdminServiceImpl implements AdminService {
             return ResultMap.error(100009,"不存该账号");
         }
         //生曾随机验证码
-        String num= randomNum.getRandomNum();
+        String num= RandomNum.getRandomNum();
         try{
             mailServicel.sendSimpleTextMailActual("修改密码",num,new String[]{email},null,null,null);
             RedisUtil.set("forget_"+email,num, (long)(60*3));
