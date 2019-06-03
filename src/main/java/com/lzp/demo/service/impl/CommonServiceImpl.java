@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @authorHmLzp
  * @create 2019 - 05 - 27 22:55
  */
-@Service
+@Service("commonService")
 public class CommonServiceImpl implements CommonService {
     @Override
     public Admin getAdmin(String token) {

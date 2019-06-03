@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import javax.xml.transform.Result;
 import java.util.Random;
 import java.util.UUID;
 
@@ -75,18 +76,18 @@ public class AdminServiceImpl implements AdminService {
         if(admin != null){
             if(admin.getStatus() == "2"){
                 return ResultMap.ok().put("result","填写验证码!");
-            }else {
+            }else{
                 return ResultMap.error(100003,"该手机已被注册!");
+
             }
-
+        }else{
+            Admin admin2 =adminMapper.queryAdminByTelephone(null,email);
+            if(admin2!=null){
+                    return ResultMap.error(100003,"该邮箱已被注册");
+            }
         }
-
         //六位随机数
-        Random random = new Random();
-        String result="";
-        for (int i=0;i<6;i++) {
-            result += random.nextInt(10);
-        }
+        String result= randomNum.getRandomNum();
             try {
                 mailServicel.sendSimpleTextMailActual("注册验证码",result,new String[]{email},null,null,null);
                 //验证码存入redis

@@ -20,7 +20,7 @@ import java.io.File;
  * @Author LiZePing
  * @date2019/5/30 8:20
  */
-@Service
+@Service("mailServicel")
 public class MailService {
 
     //默认编码

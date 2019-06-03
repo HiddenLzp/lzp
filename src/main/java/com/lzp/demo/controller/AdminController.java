@@ -19,12 +19,12 @@ import javax.xml.transform.Result;
 public class AdminController {
 
     @Resource
-    private AdminService adminService;
+    private AdminService adminServiceImpl;
 
 
     @PostMapping("/getAdminInfo")
     public ResultMap queryAdminInfo(String telephone,String passWord){
-        return  adminService.queryAdminInfo(telephone,passWord);
+        return  adminServiceImpl.queryAdminInfo(telephone,passWord);
     }
 
     @PostMapping("/registerAdmin")
@@ -32,7 +32,7 @@ public class AdminController {
         if(StringUtils.isEmpty(telephone) || StringUtils.isEmpty(email)){
             return ResultMap.error(100001,"请填写完整的信息");
         }
-        return adminService.registerAdmin(telephone,email);
+        return adminServiceImpl.registerAdmin(telephone,email);
     }
 
     @PostMapping("/checkmsgCode")
@@ -40,7 +40,7 @@ public class AdminController {
         if(StringUtils.isEmpty(telephone) || StringUtils.isEmpty(msgCode)){
             return ResultMap.error(100007,"请输入验证码！");
         }
-        return adminService.checkmsgCode(telephone,msgCode,email,password);
+        return adminServiceImpl.checkmsgCode(telephone,msgCode,email,password);
     }
 
 
@@ -49,7 +49,7 @@ public class AdminController {
         if(StringUtils.isEmpty(email)){
              return ResultMap.error(10001,"请输入完整的信息");
         }
-        return adminService.forgetPwd(email);
+        return adminServiceImpl.forgetPwd(email);
     }
 
     @PostMapping("/updatePwd")
@@ -57,7 +57,7 @@ public class AdminController {
         if(StringUtils.isEmpty(email)||StringUtils.isEmpty(password)||StringUtils.isEmpty(msgCode)){
             return ResultMap.error(10001,"请输入完整的信息");
         }
-        return adminService.updatePwd(msgCode,email,password);
+        return adminServiceImpl.updatePwd(msgCode,email,password);
     }
 
 

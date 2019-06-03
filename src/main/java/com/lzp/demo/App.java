@@ -12,7 +12,7 @@ import javax.persistence.Entity;
  * @date2019/5/27 16:30
  */
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"com.lzp.demo.dao.jpa"})
+//@EnableJpaRepositories(basePackages = {"com.lzp.demo.dao.jpa"})
 @EntityScan(basePackages = "com.lzp.demo.model")
 public class App {
     public static void main(String[] args) {
