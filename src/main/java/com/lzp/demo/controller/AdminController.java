@@ -1,8 +1,12 @@
 package com.lzp.demo.controller;
 
+import com.lzp.demo.dao.jpa.AdminDao;
+import com.lzp.demo.model.Admin;
 import com.lzp.demo.service.AdminService;
 import com.lzp.demo.utils.ResultMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +24,9 @@ public class AdminController {
 
     @Resource
     private AdminService adminServiceImpl;
+
+    @Autowired
+    private AdminDao adminDao;
 
 
     @PostMapping("/getAdminInfo")
@@ -58,6 +65,12 @@ public class AdminController {
             return ResultMap.error(10001,"请输入完整的信息");
         }
         return adminServiceImpl.updatePwd(msgCode,email,password);
+    }
+
+    @RequestMapping("/test")
+    public Admin test(){
+
+        return adminDao.findById(1).get();
     }
 
 

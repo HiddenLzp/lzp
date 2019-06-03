@@ -11,7 +11,7 @@ import java.util.List;
 public class CommonUtils {
 
     /**
-     * y
+     * 将list集合中重复的元素去除，返回
      */
     public static void removeDuplicate(List list) {
 
@@ -20,8 +20,6 @@ public class CommonUtils {
         list.clear();
 
         list.addAll(h);
-
-        System.out.println(list);
 
     }
 }

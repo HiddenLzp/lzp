@@ -1,40 +1,35 @@
 package com.lzp.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "admin")
+@Entity
+@Table(name = "Admin")
 public class Admin implements Serializable {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Integer id;
 
   private String userName;
   private String telephone;
   private String email;
   private String sex;
-  private String passWord;
+  private String password;
   private String token;
   private String status;
   private String role;
   private String random;
 
-  public String getRandom() {
-    return random;
-  }
-
-  public void setRandom(String random) {
-    this.random = random;
-  }
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -70,12 +65,12 @@ public class Admin implements Serializable {
     this.sex = sex;
   }
 
-  public String getPassWord() {
-    return passWord;
+  public String getPassword() {
+    return password;
   }
 
-  public void setPassWord(String passWord) {
-    this.passWord = passWord;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public String getToken() {
@@ -100,5 +95,13 @@ public class Admin implements Serializable {
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  public String getRandom() {
+    return random;
+  }
+
+  public void setRandom(String random) {
+    this.random = random;
   }
 }
