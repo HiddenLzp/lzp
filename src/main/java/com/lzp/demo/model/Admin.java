@@ -1,10 +1,7 @@
 package com.lzp.demo.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "admin")
@@ -12,7 +9,7 @@ public class Admin implements Serializable {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   private String userName;
