@@ -41,10 +41,22 @@
     </insert>
     
     <select id="queryAdminByTelephone" resultType="Admin">
-        SELECT * FROM admin where telephone = #{telephone}
+        SELECT * FROM admin
+        <trim prefix="where" prefixOverrides="and" >
+            <if test=" telephone !=null  " >
+                telephone = #{telephone}
+            </if>
+            <if test=" email != null ">
+                and email=#{email}
+            </if>
+        </trim>
     </select>
 
     <update id="modifyStatus">
         UPDATE admin set status = 1 where telephone = #{telephone}
+    </update>
+
+    <update id="updateAdminPwd">
+        update admin set passWord=#{passWord} where email=#{email}
     </update>
 </mapper>

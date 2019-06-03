@@ -123,6 +123,7 @@
 											</div>-->
 										</div><!-- /.widget-main -->
 
+										<!--忘记密码start-->
 										<div class="toolbar clearfix">
 											<div>
 												<a href="#" data-target="#forgot-box" class="forgot-password-link">
@@ -158,13 +159,26 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+															<input type="email" class="form-control" placeholder="Email" id="forgetEmail"/>
 															<i class="ace-icon fa fa-envelope"></i>
+														</span>
+													</label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" placeholder="密码" id="forgetPwd"/>
+															<i class="ace-icon fa fa-lock"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" class="form-control" placeholder="确认密码" id="forgetPwdTwo"/>
+															<i class="ace-icon fa fa-retweet"></i>
 														</span>
 													</label>
 
 													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+														<button type="button" class="width-35 pull-right btn btn-sm btn-danger" id="sendEmail">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
 															<span class="bigger-110">Send Me!</span>
 														</button>
@@ -519,6 +533,73 @@
 		});
 	//	注册 弹框 end
 
+        //忘记密码 发送邮箱
+        $( "#sendEmail" ).on('click', function(e) {
+
+            var pwd1 = $("#forgetPwd").val();
+            var pwd2 = $("#forgetPwdTwo").val();
+            if(pwd1==pwd2){
+                alert("什么");
+                $.ajax({
+                    url: "/admin/forgetPwd",
+                    type: "post",
+                    data:{
+                        email: $("#forgetEmail").val()
+                    },
+                    success: function (data) {
+                        if(data.status == 200 || data.status == 201){
+                            alert(data.result);
+                            var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
+                                // width: "400",
+                                // height: "300",
+                                modal: true,
+                                title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> 发送邮件</h4></div>",
+                                title_html: true,
+                                buttons: [
+                                    {
+                                        text: "Cancel",
+                                        "class" : "btn btn-minier",
+                                        click: function() {
+                                            $( this ).dialog( "close" );
+                                        }
+                                    },
+                                    {
+                                        text: "OK",
+                                        "class" : "btn btn-primary btn-minier",
+                                        click: function() {
+                                            var msgCode = $("#msgCode").val();
+
+                                            $.ajax({
+                                                url: "/admin/updatePwd",
+                                                type: "post",
+                                                data:{
+                                                    msgCode: msgCode,
+                                                    email: $("#forgetEmail").val(),
+                                                    password: $("#forgetPwd").val()
+                                                },
+                                                success: function (data) {
+                                                    if (data.status == 200){
+                                                        $( "#dialog-message" ).dialog( "close" );
+                                                        alert("修改成功，您可以返回登录了！");
+                                                        document.getElementById("registerForm").reset();
+                                                    } else {
+                                                        alert("修该失败，原因是："+ data.message);
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    }
+                                ]
+                            });
+                        } else{
+                            alert(data.message);
+                        }
+                    }
+                })
+            }else {
+                alert("两次输入的密码不一样，请重新输入！yoyo")
+            }
+        });
 	</script>
 
 	</body>

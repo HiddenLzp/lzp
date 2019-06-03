@@ -18,4 +18,9 @@ public interface AdminService {
      * 验证验证码，修改用户的状态
      */
     ResultMap checkmsgCode(String telephone, String msgCode, String email, String password);
+
+
+    ResultMap forgetPwd(String email);
+
+    ResultMap updatePwd(String msgCode,String email,String password);
 }

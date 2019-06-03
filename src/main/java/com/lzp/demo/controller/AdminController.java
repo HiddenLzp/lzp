@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.xml.transform.Result;
 
 /**
  * @authorHmLzp
@@ -42,6 +43,22 @@ public class AdminController {
         return adminService.checkmsgCode(telephone,msgCode,email,password);
     }
 
+
+    @PostMapping("/forgetPwd")
+    public ResultMap forget(String email){
+        if(StringUtils.isEmpty(email)){
+             return ResultMap.error(10001,"请输入完整的信息");
+        }
+        return adminService.forgetPwd(email);
+    }
+
+    @PostMapping("/updatePwd")
+    public ResultMap updatePwd(String msgCode,String email,String password){
+        if(StringUtils.isEmpty(email)||StringUtils.isEmpty(password)||StringUtils.isEmpty(msgCode)){
+            return ResultMap.error(10001,"请输入完整的信息");
+        }
+        return adminService.updatePwd(msgCode,email,password);
+    }
 
 
 }

@@ -15,7 +15,10 @@ public interface AdminMapper {
 
     Integer insertAdmin(@Param("telephone")String telephone, @Param("email")String email, @Param("passWord")String password,@Param("random")String random);
 
-    Admin queryAdminByTelephone(String telephone);
+
+    Admin queryAdminByTelephone(String telephone,@Param("email")String email);
 
     void modifyStatus(String telephone);
+
+    Integer updateAdminPwd(@Param("passWord")String passWord,@Param("email")String email);
 }
