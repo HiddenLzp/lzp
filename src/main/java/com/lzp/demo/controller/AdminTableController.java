@@ -22,4 +22,9 @@ public class AdminTableController {
 
     @RequestMapping("/forget")
     public String forget(){ return "forget"; }
+
+    @RequestMapping("/blank")
+    public String blank(){ return "index/blank"; }
+
+
 }
