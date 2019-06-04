@@ -57,7 +57,7 @@ public class AdminServiceImpl implements AdminService {
             BeanUtils.copyProperties(admin,adminModel);
             return ResultMap.ok().put("result",adminModel);
         }
-        return ResultMap.error(ErrorCode.LOGIN_ERROR,"账号或密码错误");
+        return ResultMap.error(ErrorCode.LOGIN_ERROR,ErrorMessage.LOGIN_ERROR);
     }
 
     @Override
@@ -74,13 +74,13 @@ public class AdminServiceImpl implements AdminService {
             if(admin.getStatus() == "2"){
                 return ResultMap.ok().put("result","填写验证码!");
             }else{
-                return ResultMap.error(100003,"该手机已被注册!");
+                return ResultMap.error(ErrorCode.RIGISTER_ERROR_TEL_ERROR,ErrorMessage.RIGISTER_ERROR_TEL);
 
             }
         }else{
             Admin admin2 =adminMapper.queryAdminByTelephone(null,email);
             if(admin2!=null){
-                    return ResultMap.error(100003,"该邮箱已被注册");
+                    return ResultMap.error(ErrorCode.RIGISTER_ERROR_EMAIL_ERROR,ErrorMessage.RIGISTER_ERROR_EMAIL);
             }
         }
         //六位随机数
@@ -91,8 +91,7 @@ public class AdminServiceImpl implements AdminService {
                 RedisUtil.set("register_"+telephone,result, (long) (60 * 2));
                 return ResultMap.ok().put("result","邮件已发送!");
             }catch (Exception e){
-
-                return ResultMap.error(100002,"注册失败，请稍后重试!");
+                return ResultMap.error(ErrorCode.SEND_EMAIL_ERROR,ErrorMessage.SEND_EMAIL_ERROR);
             }
     }
 
@@ -116,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
             }
 
         }else {
-            return ResultMap.error(100010,"验证码错误");
+            return ResultMap.error(ErrorCode.MSG_CODE_ISFAIL,ErrorMessage.MSG_CODE_ISFAIL);
         }
     }
 
@@ -146,7 +145,7 @@ public class AdminServiceImpl implements AdminService {
     public ResultMap updatePwd(String msgCode,String email, String passWord)  {
          String msgCode2= (String)RedisUtil.get("forget_"+email);
          if(!msgCode2.equals(msgCode)){
-             return ResultMap.error(100005,"验证码不一致");
+             return ResultMap.error(ErrorCode.MSG_CODE_ISFAIL,ErrorMessage.MSG_CODE_ISFAIL);
          }
          //将密码加密
         passWord=MD5Utils.string2MD5(passWord);
