@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Blank Page - Ace Admin</title>
+
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/static/css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/static/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="/static/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/static/css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/static/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="/static/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/static/js/html5shiv.min.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+
+
+<div th:insert="~{common/common :: header}"></div>
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    <div th:replace="~{common/common :: sidebar}"   id="sidebar" class="sidebar                  responsive                    ace-save-state"></div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">首页</a>
+                    </li>
+                    <li class="active">日历</li>
+                </ul><!-- /.breadcrumb -->
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="ace-settings-container" id="ace-settings-container">
+                    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                        <i class="ace-icon fa fa-cog bigger-130"></i>
+                    </div>
+
+                    <div class="ace-settings-box clearfix" id="ace-settings-box">
+                        <div class="pull-left width-50">
+                            <div class="ace-settings-item">
+                                <div class="pull-left">
+                                    <select id="skin-colorpicker" class="hide">
+                                        <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                                        <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                        <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                        <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                                    </select>
+                                </div>
+                                <span>&nbsp; 选择皮肤</span>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-navbar"> 修复Navbar</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-sidebar"> 固定边栏</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-breadcrumbs"> 固定面包屑</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-rtl"> 从右到左</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-add-container">
+                                    里面
+                                    <b>.container</b>
+                                </label>
+                            </div>
+                        </div><!-- /.pull-left -->
+
+                        <div class="pull-left width-50">
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
+                                <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                            </div>
+                        </div><!-- /.pull-left -->
+                    </div><!-- /.ace-settings-box -->
+                </div><!-- /.ace-settings-container -->
+
+                <div class="page-header">
+                    <h1>
+                        完整日历
+                        <small>
+                            <i class="ace-icon fa fa-angle-double-right"></i>
+                            可拖动和可编辑的事件
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="space"></div>
+
+                                <div id="calendar"></div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="widget-box transparent">
+                                    <div class="widget-header">
+                                        <h4>可拖动的事件</h4>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main no-padding">
+                                            <div id="external-events">
+                                                <div class="external-event label-grey" data-class="label-grey">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动1
+                                                </div>
+
+                                                <div class="external-event label-success" data-class="label-success">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动2
+                                                </div>
+
+                                                <div class="external-event label-danger" data-class="label-danger">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动3
+                                                </div>
+
+                                                <div class="external-event label-purple" data-class="label-purple">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动4
+                                                </div>
+
+                                                <div class="external-event label-yellow" data-class="label-yellow">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动5
+                                                </div>
+
+                                                <div class="external-event label-pink" data-class="label-pink">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动6
+                                                </div>
+
+                                                <div class="external-event label-info" data-class="label-info">
+                                                    <i class="ace-icon fa fa-arrows"></i>
+                                                    我的活动7
+                                                </div>
+
+                                                <label>
+                                                    <input type="checkbox" class="ace ace-checkbox" id="drop-remove" />
+                                                    <span class="lbl">掉落后移除</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:include="~{common/common :: footer}"></div>
+
+</div><!-- /.main-container -->
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='/static/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="/static/js/jquery-ui.custom.min.js"></script>
+    <script src="/static/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/fullcalendar.min.js"></script>
+    <script src="/static/js/bootbox.js"></script>
+
+
+    <!-- ace scripts -->
+    <script src="/static/js/ace-elements.min.js"></script>
+    <script src="/static/js/ace.min.js"></script>
+
+    <!-- 与此页面相关的内联脚本 -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            /*  初始化外部事件
+              -------------------------------------*/
+
+            $("#external-events div.external-event").each(function () {
+
+                //创建一个事件对象
+                //它不需要有一个开始或结束
+
+                var eventObject = {
+                    title: $.trim($(this).text())//使用元素的文本作为事件标题
+                };
+
+                //将事件对象存储在DOM元素中，以便稍后进行处理
+                $(this).data('eventObject',eventObject);
+
+                //使用jQuery UI使事件可拖动
+                $(this).draggable({
+                    zIndex: 999,
+                    revet: true,//是否会导致事件返回到它
+                    reventDuration: 0//original position after the drag
+                });
+
+            });
+
+            /* 初始化日历
+                ---------------------------------------------------------- */
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            var calendar = $("#calendar").fullCalendar({
+                //isRTL: true
+                //firstDay: 1
+
+                buttonHtml: {
+                    prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+                    next: '<i class="ace-icon fa fa-chevron-right"></i>',
+                },
+
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeen,agendaDay'
+                },
+                events: [
+                    {
+                        title: 'all Day Event',
+                        start: moment().subtract(5, 'days').format('YYYY-MM-DD'),
+                        end: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+                        className: 'label-success'
+                    }
+                ]
+            })
+
+
+
+
+        })
+    </script>
+
+</body>
+</html>

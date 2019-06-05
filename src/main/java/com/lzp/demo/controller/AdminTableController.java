@@ -26,5 +26,7 @@ public class AdminTableController {
     @RequestMapping("/blank")
     public String blank(){ return "index/blank"; }
 
+    @RequestMapping("/calender")
+    public String calender(){ return "index/calender"; }
 
 }
