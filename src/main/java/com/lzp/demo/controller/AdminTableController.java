@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @create 2019 - 05 - 27 23:22
  */
 @Controller
+@RequestMapping("/admin")
 public class AdminTableController {
 
     @RequestMapping("/index")

@@ -665,8 +665,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="calendar.html">
+                <li class="" th:class="${activeUri=='calender'?'active':''}">
+                    <a href="calendar.html" th:href="@{/admin/calender}">
                         <i class="menu-icon fa fa-calendar"></i>
 
                         <span class="menu-text">
@@ -775,7 +775,7 @@
                     </ul>
                 </li>
 
-                <li class="active open">
+                <li class="active open" >
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-file-o"></i>
 
@@ -827,8 +827,8 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="active">
-                            <a href="blank.html">
+                        <li class="active" th:class="${activeUri=='blank'?'active':''}">
+                            <a href="blank.html" th:href="@{/admin/blank}">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 空白页
                             </a>

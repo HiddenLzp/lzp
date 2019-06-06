@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/static/font-awesome/4.5.0/css/font-awesome.min.css" />
 
     <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/static/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="/static/css/fullcalendar.min.css" />
 
     <!-- text fonts -->
     <link rel="stylesheet" href="/static/css/fonts.googleapis.com.css" />
@@ -52,7 +54,7 @@
         try{ace.settings.loadState('main-container')}catch(e){}
     </script>
 
-    <div th:replace="~{common/common :: sidebar}"   id="sidebar" class="sidebar                  responsive                    ace-save-state"></div>
+    <div th:replace="~{common/common :: sidebar(activeUri='calender')}"   id="sidebar" class="sidebar                  responsive                    ace-save-state"></div>
 
     <div class="main-content">
         <div class="main-content-inner">
@@ -276,8 +278,8 @@
                 //使用jQuery UI使事件可拖动
                 $(this).draggable({
                     zIndex: 999,
-                    revet: true,//是否会导致事件返回到它
-                    reventDuration: 0//original position after the drag
+                    revert: true,//是否会导致事件返回到它
+                    revertDuration: 0//拖动后的原始位置
                 });
 
             });
@@ -293,9 +295,17 @@
                 //isRTL: true
                 //firstDay: 1
 
+                titleFormat:  'MM DD YYYY'
+                 ,
                 buttonHtml: {
                     prev: '<i class="ace-icon fa fa-chevron-left"></i>',
                     next: '<i class="ace-icon fa fa-chevron-right"></i>',
+                },
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '天'
                 },
 
                 header: {
@@ -305,12 +315,127 @@
                 },
                 events: [
                     {
-                        title: 'all Day Event',
-                        start: moment().subtract(5, 'days').format('YYYY-MM-DD'),
-                        end: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+                        title: '整天事件',
+                        start: new Date(y, m, 1),
+                        allDay: true,
+                        className: 'label-important'
+                    },
+                    {
+                        title: '长事件',
+                        start: new Date(y, m, 1),
+                        end: new Date(y, m, 7),
+                        allDay: true,
                         className: 'label-success'
+                    },
+                    {
+                        title: '短事件',
+                        start: new Date(y, m, d-3, 13, 13),
+                        allDay: true,
+                        className: 'label-info'
                     }
-                ]
+                ],
+                editable: true,
+                droppable: true, // 这允许事情被放到日历上!!
+                drop: function(date) { // 当某个东西被删除时，将调用这个函数
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+                    var $extraEventClass = $(this).attr('data-class');
+
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = false;
+                    if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                }
+                ,
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end, allDay) {
+                    bootbox.prompt("New Event Title:", function(title) {
+                        if (title !== null) {
+                            calendar.fullCalendar('renderEvent',
+                                {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay,
+                                    className: 'label-info'
+                                },
+                                true //让活动“持久”
+                            );
+                        }
+                    });
+
+                    calendar.fullCalendar('unselect');
+                }
+                ,
+                eventClick: function(calEvent, jsEvent, view) {
+
+                    //display a modal
+                    var modal =
+                        '<div class="modal fade">\
+                          <div class="modal-dialog">\
+                           <div class="modal-content">\
+                             <div class="modal-body">\
+                               <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
+                               <form class="no-margin">\
+                                  <label>Change event name &nbsp;</label>\
+                                  <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
+					 <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> 保存</button>\
+				   </form>\
+				 </div>\
+				 <div class="modal-footer">\
+					<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> 删除事件</button>\
+					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> 取消</button>\
+				 </div>\
+			  </div>\
+			 </div>\
+			</div>';
+
+
+                    var modal = $(modal).appendTo('body');
+                    modal.find('form').on('submit', function(ev){
+                        ev.preventDefault();
+
+                        calEvent.title = $(this).find("input[type=text]").val();
+                        calendar.fullCalendar('updateEvent', calEvent);
+                        modal.modal("hide");
+                    });
+                    modal.find('button[data-action=delete]').on('click', function() {
+                        calendar.fullCalendar('removeEvents' , function(ev){
+                            return (ev._id == calEvent._id);
+                        })
+                        modal.modal("hide");
+                    });
+
+                    modal.modal('show').on('hidden', function(){
+                        modal.remove();
+                    });
+
+
+                    //console.log(calEvent.id);
+                    //console.log(jsEvent);
+                    //console.log(view);
+
+                    // change the border color just for fun
+                    //$(this).css('border-color', 'red');
+
+                }
             })
 
 
