@@ -31,7 +31,13 @@ public class AdminController {
     private AdminDao adminDao;
 
 
-    @PostMapping("/getAdminInfo")
+    /**
+     * 登录
+     * @param telephone 手机号
+     * @param passWord 密码
+     * @return 登录者信息
+     */
+    @RequestMapping("/getAdminInfo")
     public ResultMap queryAdminInfo(String telephone,String passWord){
         return  adminServiceImpl.queryAdminInfo(telephone,passWord);
     }
