@@ -24,10 +24,16 @@ public class AdminTableController {
     @RequestMapping("/forget")
     public String forget(){ return "forget"; }
 
-    @RequestMapping("/blank")
+    @RequestMapping("other/blank")
     public String blank(){ return "index/blank"; }
 
     @RequestMapping("/calender")
     public String calender(){ return "index/calender"; }
 
+    /**
+     * 临时列表页面
+     * @return
+     */
+    @RequestMapping("other/tableInfotemp")
+    public String tableInfotemp(){ return "index/tableInfotemp"; }
 }

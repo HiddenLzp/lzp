@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset="utf-8" />
-	<title>Blank Page - Ace Admin</title>
+	<title>临时列表页</title>
 
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -52,7 +52,7 @@
         try{ace.settings.loadState('main-container')}catch(e){}
 	</script>
 
-	<div th:replace="~{common/common :: sidebar(activeUri='other/blank')}"   id="sidebar" class="sidebar                  responsive                    ace-save-state"></div>
+	<div th:replace="~{common/common :: sidebar(activeUri='other/tableinfotemp')}"   id="sidebar" class="sidebar                  responsive                    ace-save-state"></div>
 
 	<div class="main-content">
 		<div class="main-content-inner">
@@ -66,7 +66,7 @@
 					<li>
 						<a href="#">其他页面</a>
 					</li>
-					<li class="active">空白页</li>
+					<li class="active">临时列表页面</li>
 				</ul><!-- /.breadcrumb -->
 
 				<div class="nav-search" id="nav-search">
@@ -83,6 +83,14 @@
 
 				<!--右侧 设置选项-->
 				<div th:insert="~{common/common :: container}"></div>
+
+
+				<table id="grid-table"></table>
+				<div id="grid-pager"></div>
+
+
+
+
 
 				<div class="row">
 					<div class="col-xs-12">
@@ -115,12 +123,52 @@
 </script>
 <script src="/static/js/bootstrap.min.js"></script>
 
-<!-- page specific plugin scripts -->
+<!-- 特异性脚本插件页-->
 
 <!-- ace scripts -->
 <script src="/static/js/ace-elements.min.js"></script>
 <script src="/static/js/ace.min.js"></script>
 
 <!-- inline scripts related to this page -->
+
+<script src="/static/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/js/jquery.jqGrid.min.js"></script>
+<script src="/static/js/grid.locale-en.js"></script>
+<script type="text/javascript">
+
+	$(function ($) {
+		var gird_selector ="#grid-table";
+		var pager_selector = "#grid-pager";
+
+
+		//closest() 方法返回被选元素的第一个祖先元素。
+		var parent_column = $(gird_selector).closest('[class*="col-"]');
+		//调整大小以适应页面大小
+		$(window).on('resize.jqGird', function () {
+			$(gird_selector).jqGrid('setGridWidth', parent_column.width());
+		})
+		//侧边栏折叠/展开时调整大小
+		$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+			if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+				//setTimeout仅用于WebKit，用于为DOM更改留出时间，然后重新绘制！！！！
+				setTimeout(function() {
+					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+				}, 20);
+			}
+		})
+
+		$(gird_selector).jqGrid({
+			url: "",
+			//是否使用suggrid
+			subGird: true,
+			//从服务器端返回的数据类型，默认xml。可选类型：xml，local，json，jsonnp，script，xmlstring，jsonstring，clientside
+			dataType: "json",
+			subGridOptions: {
+
+			},
+
+		})
+	})
+</script>
 </body>
 </html>
