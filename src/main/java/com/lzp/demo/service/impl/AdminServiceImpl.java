@@ -42,7 +42,8 @@ public class AdminServiceImpl implements AdminService {
         if (tokenKey != null){
             admin = commonService.getAdmin(tokenKey);
             RedisUtil.remove("admin_"+tokenKey);
-            if(admin != null && admin.getPassword().equals(passWord)){
+            if(admin != null && admin.getPassWord().equals(passWord)){
+                 admin.setToken(UUIDUtil.uuid());
                  RedisUtil.set("admin_"+admin.getTelephone(),admin.getToken(),RedisUtil.A_WEEK);
                  RedisUtil.set("admin_"+admin.getToken(), JSON.toJSONString(admin),RedisUtil.TWO_DAYS);
                  return ResultMap.ok().put("result",admin);
@@ -50,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
         }
         admin = adminMapper.queryAdminInfo(telephone,passWord);
         if(admin != null){
-            admin.setToken(UUID.randomUUID().toString());
+            admin.setToken(UUIDUtil.uuid());
             RedisUtil.set("admin_"+admin.getTelephone(),admin.getToken(),RedisUtil.A_WEEK);
             RedisUtil.set("admin_"+admin.getToken(), JSON.toJSONString(admin),RedisUtil.TWO_DAYS);
             AdminModel adminModel = new AdminModel();

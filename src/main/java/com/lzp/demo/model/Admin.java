@@ -14,12 +14,11 @@ public class Admin implements Serializable {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-
-  private String username;
+  private String userName;
   private String telephone;
   private String email;
   private String sex;
-  private String password;
+  private String passWord;
   private String token;
   private String status;
   private String role;
@@ -33,12 +32,12 @@ public class Admin implements Serializable {
     this.id = id;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public String getTelephone() {
@@ -65,12 +64,12 @@ public class Admin implements Serializable {
     this.sex = sex;
   }
 
-  public String getPassword() {
-    return password;
+  public String getPassWord() {
+    return passWord;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setPassWord(String passWord) {
+    this.passWord = passWord;
   }
 
   public String getToken() {

@@ -387,6 +387,24 @@
 					height.html($height);
 				}
 			}));
+			//绑定回车键
+			$(window).keydown(function (event) {
+           		if(event.keyCode == 13){
+                    var telepphone = $("#telepphone").val();
+                    if (!(/^1[34578]\d{9}$/.test(telepphone))){
+                        alert("手机号有误!")
+                        return false;
+                    }
+                    if ($("#loginPwd").val() == null || $("#loginPwd").val() == "" || $("#loginPwd").val() == undefined) {
+                        alert("请输入密码!")
+                        $("#loginPwd").focus();
+                        return false;
+                    }
+                    init();
+				}
+            })
+
+
 		})
 		// <!--登录   start-->
 
