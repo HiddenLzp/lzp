@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzp.demo.dao.ExpenditureMapper">
+     <select id="queryMoneyInfo" resultType="ExpenditureModel">
+         SELECT
+         	*
+         FROM
+         	expenditure e
+         <where>
+             e.adminId = #{adminId}
+            <if test="startDate != null">
+                AND paydate BETWEEN #{startDate}
+                AND #{endDate}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+         </where>
+     </select>
+</mapper>

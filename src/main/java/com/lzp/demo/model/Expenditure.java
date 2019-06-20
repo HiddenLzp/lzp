@@ -11,6 +11,15 @@ public class Expenditure  implements Serializable {
   private double paymoney;//支出金额
   private Date paydate;//支出时间
   private String payreason;//支出原由
+  private Integer type;//支出类型
+
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
 
   public Integer getId() {
     return id;

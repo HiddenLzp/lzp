@@ -18,4 +18,8 @@ public interface ErrorMessage {
     String MSG_CODE_ISFAIL = "验证码不匹配";
 
     String INFO_iS_FAIL = "信息不完整!";
+
+    String LOGIN_TIMEOUT = "登录已失效";
+
+    String SERVER_ERROR = "服务器内部错误";
 }

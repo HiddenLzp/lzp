@@ -169,31 +169,7 @@
 <script type="text/javascript">
     var grid_data =
         [
-            {id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
-        ];
-
+            {index:"1",paymoney:"1000",payreason:"支出",typeValue:"Yes",ship:"FedEx", paydate:"2007-12-03"}];
     var subgrid_data =
         [
             {id:"1", name:"sub grid item 1", qty: 11},
@@ -248,11 +224,11 @@
 
         jQuery(grid_selector).jqGrid({
             //direction: "rtl",
-
+			url : '/expenditure/getMoneyInfo',
             //子网格选项
             subGrid : true,
             //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
-            //datatype: "xml",
+            datatype: "json",
             subGridOptions : {
                 plusicon : "ace-icon fa fa-plus center bigger-110 blue",
                 minusicon  : "ace-icon fa fa-minus center bigger-110 blue",
@@ -276,10 +252,10 @@
 
 
 
-            data: grid_data,
-            datatype: "local",
+            //data: grid_data,
+            //datatype: "local",
             height: 250,
-            colNames:[' ', 'ID','Last Sales','Name', 'Stock', 'Ship via','Notes'],
+            colNames:['操作', '序号','时间','金额', '支付(Yes)/收入(No)', 'Ship via','原由'],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
@@ -291,12 +267,12 @@
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                {name:'id',index:'id', width:60, sorttype:"int", editable: true},
-                {name:'sdate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
-                {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                {name:'stock',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
+                {name:'index',index:'index', width:60, sorttype:"int", editable: true},
+                {name:'paydateValue',index:'paydateValue',width:90, editable:true, sorttype:"date",unformat: pickDate},
+                {name:'paymoney',index:'paymoney', width:120,editable: true,editoptions:{size:"20",maxlength:"30"}},
+                {name:'typeValue',index:'typeValue', width:120, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
                 {name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-                {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
+                {name:'payreason',index:'payreason', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
             ],
 
             viewrecords : true,
@@ -305,7 +281,7 @@
             pager : pager_selector,
             altRows: true,
             //toppager: true,
-
+			mtype : "post",
             multiselect: true,
             //multikey: "ctrlKey",
             multiboxonly: true,

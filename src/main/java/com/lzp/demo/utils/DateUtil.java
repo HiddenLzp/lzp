@@ -79,4 +79,17 @@ public class DateUtil {
         return formatDate;
     }
 
+    /**
+         * 转化时间格式为 2019-06-04格式
+         */
+        public static String conversionDateToString2(Date date){
+            if(date == null){
+                date = new Date();
+            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formatDate = simpleDateFormat.format(date);
+
+            return formatDate;
+        }
+
 }

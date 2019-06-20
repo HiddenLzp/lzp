@@ -20,4 +20,8 @@ public interface ErrorCode {
 
     int INFO_iS_FAIL = 106;//信息不完整
 
+    int LOGIN_TIMEOUT = 107;//登录已失效
+
+    int SERVER_ERROR = 201;//服务器内部错误
+
 }
