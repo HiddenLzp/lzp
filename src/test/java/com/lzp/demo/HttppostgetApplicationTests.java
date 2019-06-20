@@ -37,12 +37,39 @@ public class HttppostgetApplicationTests {
 
     public static void main(String[] args) {
 
-        Map map = new HashMap();
+       /* Map map = new HashMap();
         map.put("page",1);
         map.put("count",2);
         map.put("type","image");
         String s = HttpRequestUtil.httpRequest("https://api.apiopen.top/getJoke", HttpRequestUtil.GET, map);
-        System.out.println(s);
+        System.out.println(s);*/
+
+
+       float a = 1.0f - 0.9f;
+        System.out.println("1.0f - 0.9f = " + a);//0.100000024
+
+        float b = 09f - 0.8f;
+        System.out.println(" 09f - 0.8f = " + b);//8.2
+
+        Float a1 = Float.valueOf(1.0f - 0.9f);
+        System.out.println("Float.valueOf(1.0f - 0.9f) = " + a1);//0.100000024
+        Float b1 = Float.valueOf(0.9f - 0.8f);
+        System.out.println("Float.valueOf(0.9f - 0.8f) = " + b1);//0.099999964
+
+        /**
+         * 有空指针异常
+         */
+        String param = null;
+        switch (param) {
+            case "null":
+                System.out.println("null");
+                break;
+            default:
+                System.out.println("default");
+        }
+
+
+
 
     }
 
