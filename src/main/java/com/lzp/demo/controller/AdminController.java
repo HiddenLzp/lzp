@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.transform.Result;
 
 /**
@@ -21,7 +22,7 @@ import javax.xml.transform.Result;
  * @create 2019 - 05 - 27 22:40
  */
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin100")
 public class AdminController {
 
     @Resource
@@ -38,8 +39,12 @@ public class AdminController {
      * @return 登录者信息
      */
     @RequestMapping("/getAdminInfo")
-    public ResultMap queryAdminInfo(String telephone,String passWord){
-        return  adminServiceImpl.queryAdminInfo(telephone,passWord);
+    public ResultMap queryAdminInfo(HttpServletRequest request, String telephone, String passWord){
+        ResultMap resultMap = adminServiceImpl.queryAdminInfo(telephone, passWord);
+        if(resultMap.get("status").equals(200)){
+            request.getSession().setAttribute("admin",resultMap.get("result"));
+        }
+        return  resultMap;
     }
 
     @PostMapping("/registerAdmin")

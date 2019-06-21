@@ -431,7 +431,7 @@
 
 		function init() {
 			$.ajax({
-				url: "/admin/getAdminInfo",
+				url: "/admin100/getAdminInfo",
 				type: "POST",
 				data:{
 					telephone: $("#telepphone").val(),
@@ -479,7 +479,7 @@
                     btn.button('reset')
                 }, 10000);
                 $.ajax({
-                    url: "/admin/registerAdmin",
+                    url: "/admin100/registerAdmin",
                     type: "post",
                     data:{
                         telephone: $("#registTel").val(),
@@ -512,7 +512,7 @@
                                                 return false;
                                             }
                                             $.ajax({
-                                                url: "/admin/checkmsgCode",
+                                                url: "/admin100/checkmsgCode",
                                                 type: "post",
                                                 data:{
                                                     telephone: telephone,
@@ -559,7 +559,7 @@
             if(pwd1==pwd2){
                 alert("什么");
                 $.ajax({
-                    url: "/admin/forgetPwd",
+                    url: "/admin100/forgetPwd",
                     type: "post",
                     data:{
                         email: $("#forgetEmail").val()
@@ -588,7 +588,7 @@
                                             var msgCode = $("#msgCode").val();
 
                                             $.ajax({
-                                                url: "/admin/updatePwd",
+                                                url: "/admin100/updatePwd",
                                                 type: "post",
                                                 data:{
                                                     msgCode: msgCode,
