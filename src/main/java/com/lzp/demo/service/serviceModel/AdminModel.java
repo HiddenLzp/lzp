@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class AdminModel implements Serializable {
 
-  private long id;
+  private Integer id;
   private String userName;
   private String telephone;
   private String email;
@@ -15,15 +15,13 @@ public class AdminModel implements Serializable {
   private String role;
 
 
-
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getUserName() {
     return userName;

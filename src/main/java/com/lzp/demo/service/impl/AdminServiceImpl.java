@@ -46,7 +46,9 @@ public class AdminServiceImpl implements AdminService {
                  admin.setToken(UUIDUtil.uuid());
                  RedisUtil.set("admin_"+admin.getTelephone(),admin.getToken(),RedisUtil.A_WEEK);
                  RedisUtil.set("admin_"+admin.getToken(), JSON.toJSONString(admin),RedisUtil.TWO_DAYS);
-                 return ResultMap.ok().put("result",admin);
+                 AdminModel adminModel = new AdminModel();
+                 BeanUtils.copyProperties(admin,adminModel);
+                 return ResultMap.ok().put("result",adminModel);
             }
         }
         admin = adminMapper.queryAdminInfo(telephone,passWord);

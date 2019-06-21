@@ -32,7 +32,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
                 //浏览器发送请求来到login页面
-                registry.addViewController("/admin").setViewName("login");
+                registry.addViewController("/").setViewName("login");
             }
         };
         return adapter;

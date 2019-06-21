@@ -285,8 +285,7 @@
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                 <img class="nav-user-photo" src="/static/images/avatars/user.jpg" alt="Jason's Photo" />
                                 <span class="user-info">
-									<small>Welcome,</small>
-									Jason
+
 								</span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
@@ -800,7 +799,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="">
+                        <li class="" th:class="${#strings.containsIgnoreCase(activeUri,'4xx')}?'active':''">
                             <a href="error-404.html">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 错误404
@@ -953,4 +952,6 @@
             </div><!-- /.ace-settings-box -->
         </div><!-- /.ace-settings-container -->
 </body>
+
+<script src="/static/js/jquery-1.11.3.min.js"></script>
 </html>

@@ -440,6 +440,7 @@
 				success: function (data) {
 					if(data.status == 200){
 						alert("hello "+data.result.userName);
+						window.location.href = "admin/other/blank";
 						return true;
 					}else {
 						alert(data.message)
